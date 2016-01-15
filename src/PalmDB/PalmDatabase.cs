@@ -40,13 +40,13 @@ namespace PalmDB
         /// </summary>
         public uint ModificationNumber { get; set; }
         /// <summary>
-        /// Gets or sets the application information identifier.
+        /// Gets or sets the application information.
         /// </summary>
-        public uint AppInfoId { get; set; }
+        public byte[] AppInfo { get; set; }
         /// <summary>
-        /// Gets or sets the sort information identifier.
+        /// Gets or sets the sort information.
         /// </summary>
-        public uint SortInfoId { get; set; }
+        public byte[] SortInfo { get; set; }
         /// <summary>
         /// Gets or sets the type of this database.
         /// </summary>

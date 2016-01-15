@@ -46,10 +46,10 @@ namespace PalmDB
             await modificationNumberValue.WriteValueAsync(writer, database.ModificationNumber);
 
             var appInfoIdValue = new UIntPalmValue(4);
-            await appInfoIdValue.WriteValueAsync(writer, database.AppInfoId);
+            await appInfoIdValue.WriteValueAsync(writer, 0); // database.AppInfoId);
 
             var sortInfoIdValue = new UIntPalmValue(4);
-            await sortInfoIdValue.WriteValueAsync(writer, database.SortInfoId);
+            await sortInfoIdValue.WriteValueAsync(writer, 0); // database.SortInfoId);
 
             var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
             await typeValue.WriteValueAsync(writer, database.Type);
