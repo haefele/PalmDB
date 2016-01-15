@@ -49,8 +49,8 @@ namespace PalmDB.Serialization
             Guard.NotNull(writer, nameof(writer));
 
             var data = BitConverter.GetBytes(value);
-            Array.Reverse(data);
             Array.Resize(ref data, this.Length);
+            Array.Reverse(data);
 
             await writer.WriteAsync(data);
         }
