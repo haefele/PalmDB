@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using PalmDB.Serialization;
@@ -11,19 +10,25 @@ namespace PalmDB
 {
     public class PalmDatabaseReader
     {
+        /// <summary>
+        /// Reads a <see cref="PalmDatabase"/> from the specified <paramref name="stream"/>.
+        /// </summary>
+        /// <param name="stream">The stream.</param>
         public static async Task<PalmDatabase> ReadAsync(Stream stream)
         {
             Guard.NotNull(stream, nameof(stream));
+            Guard.Not(stream.CanSeek == false, nameof(stream.CanSeek));
+            Guard.Not(stream.CanRead == false, nameof(stream.CanRead));
 
             var database = new PalmDatabase();
             var reader = new AsyncBinaryReader(stream);
 
-            var nameValue = new StringPalmValue(32, Encoding.UTF8, zeroTerminated:true);
+            var nameValue = new StringPalmValue(32, Encoding.UTF8, zeroTerminated: true);
             database.Name = await nameValue.ReadValueAsync(reader);
 
             var attributesValue = new EnumPalmValue<PalmDatabaseAttributes>(2);
             database.Attributes = await attributesValue.ReadValueAsync(reader);
-            
+
             var versionValue = new UIntPalmValue(2);
             database.Version = (short)await versionValue.ReadValueAsync(reader);
 
@@ -31,7 +36,7 @@ namespace PalmDB
             database.CreationDate = await creationDateValue.ReadValueAsync(reader);
 
             var modificationDateValue = new DateTimeOffsetPalmValue();
-            database.ModificationDate  = await modificationDateValue.ReadValueAsync(reader);
+            database.ModificationDate = await modificationDateValue.ReadValueAsync(reader);
 
             var lastBackupDateValue = new DateTimeOffsetPalmValue();
             database.LastBackupDate = await lastBackupDateValue.ReadValueAsync(reader);
@@ -45,10 +50,10 @@ namespace PalmDB
             var sortInfoIdValue = new UIntPalmValue(4);
             database.SortInfoId = await sortInfoIdValue.ReadValueAsync(reader);
 
-            var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated:false);
+            var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
             database.Type = await typeValue.ReadValueAsync(reader);
 
-            var creatorValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated:false);
+            var creatorValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
             database.Creator = await creatorValue.ReadValueAsync(reader);
 
             var uniqueIdSeedValue = new UIntPalmValue(4);
@@ -56,11 +61,12 @@ namespace PalmDB
 
             var nextRecordListIdValue = new UIntPalmValue(4);
             database.NextRecordListId = await nextRecordListIdValue.ReadValueAsync(reader);
-            
+
             uint numberOfRecords = await new UIntPalmValue(2).ReadValueAsync(reader);
-            
+
             var recordAndDataOffsets = new List<Tuple<PalmDatabaseRecord, uint>>();
 
+            //Read the records
             for (int i = 0; i < numberOfRecords; i++)
             {
                 var recordDataOffset = await new UIntPalmValue(4).ReadValueAsync(reader);
@@ -76,6 +82,7 @@ namespace PalmDB
                 recordAndDataOffsets.Add(Tuple.Create(record, recordDataOffset));
             }
 
+            //Fill all records with their content
             for (int i = 0; i < numberOfRecords; i++)
             {
                 var currentRecord = recordAndDataOffsets[i];

@@ -28,5 +28,16 @@ namespace PalmDB
             if (argument < 0)
                 throw new ArgumentException($"{name} cannot be less than 0.", name);
         }
+
+        /// <summary>
+        /// Throws a <see cref="ArgumentException"/> if the specified <paramref name="argument"/> is <c>true</c>.
+        /// </summary>
+        /// <param name="argument">The argument that should not be true.</param>
+        /// <param name="name">The name.</param>
+        public static void Not(bool argument, string name)
+        {
+            if (argument)
+                throw new ArgumentException(string.Empty, name);
+        }
     }
 }
