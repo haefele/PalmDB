@@ -8,6 +8,8 @@ namespace PalmDB.Serialization
     {
         public async Task<DateTimeOffset?> ReadValueAsync(AsyncBinaryReader reader)
         {
+            Guard.NotNull(reader, nameof(reader));
+
             var internalValue = new UintPalmValue(4);
             var value = await internalValue.ReadValueAsync(reader);
 
@@ -25,6 +27,8 @@ namespace PalmDB.Serialization
 
         public async Task WriteValueAsync(AsyncBinaryWriter writer, DateTimeOffset? value)
         {
+            Guard.NotNull(writer, nameof(writer));
+
             var secondsSinceUnixTimestamp = value != null
                 ? (uint)(value.Value - new DateTime(1970, 1, 1)).TotalSeconds
                 : 0U;

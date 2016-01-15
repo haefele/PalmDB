@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Guard.cs" />
     <Compile Include="PalmDatabase.cs" />
     <Compile Include="PalmDatabaseAttributes.cs" />
     <Compile Include="PalmDatabaseReader.cs" />

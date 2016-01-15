@@ -9,11 +9,15 @@ namespace PalmDB.Serialization
 
         public EnumPalmValue(int length)
         {
+            Guard.NotNegative(length, nameof(length));
+
             this.Length = length;
         }
 
         public async Task<T> ReadValueAsync(AsyncBinaryReader reader)
         {
+            Guard.NotNull(reader, nameof(reader));
+
             var internalValue = new UintPalmValue(this.Length);
             var data = await internalValue.ReadValueAsync(reader);
 
@@ -22,6 +26,9 @@ namespace PalmDB.Serialization
 
         public async Task WriteValueAsync(AsyncBinaryWriter writer, T value)
         {
+            Guard.NotNull(writer, nameof(writer));
+            Guard.NotNull(value, nameof(value));
+
             var internalValue = new UintPalmValue(this.Length);
             var data = (uint)(int)(object)value;
 

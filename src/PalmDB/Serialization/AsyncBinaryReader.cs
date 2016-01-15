@@ -9,11 +9,15 @@ namespace PalmDB.Serialization
 
         public AsyncBinaryReader(Stream stream)
         {
+            Guard.NotNull(stream, nameof(stream));
+
             this.Stream = stream;
         }
 
         public async Task<byte[]> ReadAsync(int length)
         {
+            Guard.NotNegative(length, nameof(length));
+
             var data = new byte[length];
 
             int currentPosition = 0;

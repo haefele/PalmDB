@@ -13,6 +13,8 @@ namespace PalmDB
     {
         public static async Task<PalmDatabase> ReadAsync(Stream stream)
         {
+            Guard.NotNull(stream, nameof(stream));
+
             var database = new PalmDatabase();
             var reader = new AsyncBinaryReader(stream);
 

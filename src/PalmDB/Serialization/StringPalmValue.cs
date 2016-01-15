@@ -14,6 +14,9 @@ namespace PalmDB.Serialization
 
         public StringPalmValue(int length, Encoding encoding, bool zeroTerminated)
         {
+            Guard.NotNegative(length, nameof(length));
+            Guard.NotNull(encoding, nameof(encoding));
+
             this.Length = length;
             this.Encoding = encoding;
             this.ZeroTerminated = zeroTerminated;
@@ -21,11 +24,15 @@ namespace PalmDB.Serialization
 
         public async Task<string> ReadValueAsync(AsyncBinaryReader reader)
         {
+            Guard.NotNull(reader, nameof(reader));
+
             var data = await reader.ReadAsync(this.Length);
 
             if (this.ZeroTerminated)
             {
-                data = data.TakeWhile(f => f != 0).ToArray();
+                data = data
+                    .TakeWhile(f => f != 0)
+                    .ToArray();
             }
 
             return this.Encoding.GetString(data);
@@ -33,6 +40,9 @@ namespace PalmDB.Serialization
 
         public Task WriteValueAsync(AsyncBinaryWriter writer, string value)
         {
+            Guard.NotNull(writer, nameof(writer));
+            Guard.NotNull(value, nameof(value));
+
             var data = this.Encoding.GetBytes(value);
 
             //Ensure data has right length
