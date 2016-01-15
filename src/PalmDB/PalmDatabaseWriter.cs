@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PalmDB.Serialization;
@@ -46,10 +47,12 @@ namespace PalmDB
             await modificationNumberValue.WriteValueAsync(writer, database.ModificationNumber);
 
             var appInfoIdValue = new UIntPalmValue(4);
-            await appInfoIdValue.WriteValueAsync(writer, 0); // database.AppInfoId);
+            var offsetOfAppInfoId = writer.Stream.Position;
+            await appInfoIdValue.WriteValueAsync(writer, 0);
 
             var sortInfoIdValue = new UIntPalmValue(4);
-            await sortInfoIdValue.WriteValueAsync(writer, 0); // database.SortInfoId);
+            var offsetOfSortInfoId = writer.Stream.Position;
+            await sortInfoIdValue.WriteValueAsync(writer, 0);
 
             var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
             await typeValue.WriteValueAsync(writer, database.Type);
@@ -90,6 +93,40 @@ namespace PalmDB
 
             var fillerValue = new ByteArrayPalmValue(2);
             await fillerValue.WriteValueAsync(writer, new byte[2]);
+
+            //Write appInfo
+            if (database.AppInfo.Any())
+            {
+                var appInfoId = (uint)writer.Stream.Position;
+                
+                var dataValue = new ByteArrayPalmValue(database.AppInfo.Length);
+                await dataValue.WriteValueAsync(writer, database.AppInfo);
+
+                var previousOffset = writer.Stream.Position;
+
+                writer.Stream.Seek(offsetOfAppInfoId, SeekOrigin.Begin);
+
+                await appInfoIdValue.WriteValueAsync(writer, appInfoId);
+
+                writer.Stream.Seek(previousOffset, SeekOrigin.Begin);
+            }
+
+            //Write sortInfo
+            if (database.SortInfo.Any())
+            {
+                var sortInfoId = (uint)writer.Stream.Position;
+
+                var dataValue = new ByteArrayPalmValue(database.SortInfo.Length);
+                await dataValue.WriteValueAsync(writer, database.SortInfo);
+
+                var previousOffset = writer.Stream.Position;
+
+                writer.Stream.Seek(offsetOfSortInfoId, SeekOrigin.Begin);
+
+                await sortInfoIdValue.WriteValueAsync(writer, sortInfoId);
+
+                writer.Stream.Seek(previousOffset, SeekOrigin.Begin);
+            }
 
             //Write the record content
             foreach (var record in database.Records)
