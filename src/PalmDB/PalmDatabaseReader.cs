@@ -24,7 +24,7 @@ namespace PalmDB
             var attributesValue = new EnumPalmValue<PalmDatabaseAttributes>(2);
             database.Attributes = await attributesValue.ReadValueAsync(reader);
             
-            var versionValue = new UintPalmValue(2);
+            var versionValue = new UIntPalmValue(2);
             database.Version = (short)await versionValue.ReadValueAsync(reader);
 
             var creationDateValue = new DateTimeOffsetPalmValue();
@@ -36,13 +36,13 @@ namespace PalmDB
             var lastBackupDateValue = new DateTimeOffsetPalmValue();
             database.LastBackupDate = await lastBackupDateValue.ReadValueAsync(reader);
 
-            var modificationNumberValue = new UintPalmValue(4);
+            var modificationNumberValue = new UIntPalmValue(4);
             database.ModificationNumber = await modificationNumberValue.ReadValueAsync(reader);
 
-            var appInfoIdValue = new UintPalmValue(4);
+            var appInfoIdValue = new UIntPalmValue(4);
             database.AppInfoId = await appInfoIdValue.ReadValueAsync(reader);
 
-            var sortInfoIdValue = new UintPalmValue(4);
+            var sortInfoIdValue = new UIntPalmValue(4);
             database.SortInfoId = await sortInfoIdValue.ReadValueAsync(reader);
 
             var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated:false);
@@ -51,21 +51,21 @@ namespace PalmDB
             var creatorValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated:false);
             database.Creator = await creatorValue.ReadValueAsync(reader);
 
-            var uniqueIdSeedValue = new UintPalmValue(4);
+            var uniqueIdSeedValue = new UIntPalmValue(4);
             database.UniqueIdSeed = await uniqueIdSeedValue.ReadValueAsync(reader);
 
-            var nextRecordListIdValue = new UintPalmValue(4);
+            var nextRecordListIdValue = new UIntPalmValue(4);
             database.NextRecordListId = await nextRecordListIdValue.ReadValueAsync(reader);
             
-            uint numberOfRecords = await new UintPalmValue(2).ReadValueAsync(reader);
+            uint numberOfRecords = await new UIntPalmValue(2).ReadValueAsync(reader);
             
             var recordAndDataOffsets = new List<Tuple<PalmDatabaseRecord, uint>>();
 
             for (int i = 0; i < numberOfRecords; i++)
             {
-                var recordDataOffset = await new UintPalmValue(4).ReadValueAsync(reader);
+                var recordDataOffset = await new UIntPalmValue(4).ReadValueAsync(reader);
                 var recordAttribute = await new ByteArrayPalmValue(1).ReadValueAsync(reader);
-                var uniqueId = await new UintPalmValue(3).ReadValueAsync(reader);
+                var uniqueId = await new UIntPalmValue(3).ReadValueAsync(reader);
 
                 var record = new PalmDatabaseRecord
                 {

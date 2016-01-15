@@ -30,7 +30,7 @@ namespace PalmDB.Serialization
         {
             Guard.NotNull(reader, nameof(reader));
 
-            var internalValue = new UintPalmValue(4);
+            var internalValue = new UIntPalmValue(4);
             var value = await internalValue.ReadValueAsync(reader);
 
             if (value == 0)
@@ -61,7 +61,7 @@ namespace PalmDB.Serialization
                 ? (uint)(value.Value - baseDateTime).TotalSeconds
                 : 0U;
 
-            var internalValue = new UintPalmValue(4);
+            var internalValue = new UIntPalmValue(4);
             await internalValue.WriteValueAsync(writer, secondsSinceUnixTimestamp);
         }
     }

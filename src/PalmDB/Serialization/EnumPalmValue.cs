@@ -34,7 +34,7 @@ namespace PalmDB.Serialization
         {
             Guard.NotNull(reader, nameof(reader));
 
-            var internalValue = new UintPalmValue(this.Length);
+            var internalValue = new UIntPalmValue(this.Length);
             var data = await internalValue.ReadValueAsync(reader);
 
             return (T)(object)(int)data;
@@ -49,7 +49,7 @@ namespace PalmDB.Serialization
             Guard.NotNull(writer, nameof(writer));
             Guard.NotNull(value, nameof(value));
 
-            var internalValue = new UintPalmValue(this.Length);
+            var internalValue = new UIntPalmValue(this.Length);
             var data = (uint)(int)(object)value;
 
             await internalValue.WriteValueAsync(writer, data);
