@@ -60,6 +60,7 @@
     <Compile Include="PalmTestBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\AsyncBinaryReaderTests.cs" />
+    <Compile Include="Serialization\AsyncBinaryWriterTests.cs" />
     <Compile Include="Serialization\StringPalmValueTests.cs" />
   </ItemGroup>
   <ItemGroup>
