@@ -8,64 +8,15 @@ using PalmDB.Serialization;
 
 namespace PalmDB
 {
-    public class PalmDatabaseWriter
-    {
-        public static async Task WriteAsync(PalmDatabase database, Stream stream)
-        {
-            var writer = new AsyncBinaryWriter(stream);
-
-            var nameValue = new StringPalmValue(32, Encoding.UTF8, zeroTerminated:true);
-            await nameValue.WriteValueAsync(writer, database.Name);
-
-            var attributesValue = new EnumPalmValue<PalmDatabaseAttributes>(2);
-            await attributesValue.WriteValueAsync(writer, database.Attributes);
-
-            var versionValue = new UIntPalmValue(2);
-            await versionValue.WriteValueAsync(writer, (uint)database.Version);
-
-            var creationDateValue = new DateTimeOffsetPalmValue();
-            await creationDateValue.WriteValueAsync(writer, database.CreationDate);
-
-            var modificationDateValue = new DateTimeOffsetPalmValue();
-            await modificationDateValue.WriteValueAsync(writer, database.ModificationDate);
-
-            var lastBackupDateValue = new DateTimeOffsetPalmValue();
-            await lastBackupDateValue.WriteValueAsync(writer, database.LastBackupDate);
-
-            var modificationNumberValue = new UIntPalmValue(4);
-            await modificationNumberValue.WriteValueAsync(writer, database.ModificationNumber);
-
-            var appInfoIdValue = new UIntPalmValue(4);
-            await appInfoIdValue.WriteValueAsync(writer, database.AppInfoId);
-
-            var sortInfoIdValue = new UIntPalmValue(4);
-            await sortInfoIdValue.WriteValueAsync(writer, database.SortInfoId);
-
-            var typeValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
-            await typeValue.WriteValueAsync(writer, database.Type);
-
-            var creatorValue = new StringPalmValue(4, Encoding.UTF8, zeroTerminated: false);
-            await creatorValue.WriteValueAsync(writer, database.Creator);
-
-            var uniqueIdSeedValue = new UIntPalmValue(4);
-            await uniqueIdSeedValue.WriteValueAsync(writer, database.UniqueIdSeed);
-
-            var nextRecordListIdValue = new UIntPalmValue(4);
-            await nextRecordListIdValue.WriteValueAsync(writer, database.NextRecordListId);
-
-            var numberOfRecordsValue = new UIntPalmValue(2);
-            await numberOfRecordsValue.WriteValueAsync(writer, (uint)database.Records.Count);
-
-            //TODO: Write records
-        }
-    }
-
+    /// <summary>
+    /// Allows reading of palm databases.
+    /// </summary>
     public class PalmDatabaseReader
     {
         /// <summary>
         /// Reads a <see cref="PalmDatabase"/> from the specified <paramref name="stream"/>.
         /// </summary>
-        /// <param name="stream">The stream.</param>
+        /// <param name="stream">The stream to read the database from.</param>
         public static async Task<PalmDatabase> ReadAsync(Stream stream)
         {
             Guard.NotNull(stream, nameof(stream));

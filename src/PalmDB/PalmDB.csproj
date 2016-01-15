@@ -45,6 +45,7 @@
     <Compile Include="PalmDatabaseAttributes.cs" />
     <Compile Include="PalmDatabaseReader.cs" />
     <Compile Include="PalmDatabaseRecord.cs" />
+    <Compile Include="PalmDatabaseWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serialization\AsyncBinaryReader.cs" />
     <Compile Include="Serialization\AsyncBinaryWriter.cs" />
