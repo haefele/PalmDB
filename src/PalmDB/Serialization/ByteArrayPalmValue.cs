@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 
 namespace PalmDB.Serialization
 {
-    internal class BytePalmValue : IPalmValue<byte[]>
+    internal class ByteArrayPalmValue : IPalmValue<byte[]>
     {
         public int Length { get; }
 
-        public BytePalmValue(int length)
+        public ByteArrayPalmValue(int length)
         {
             Guard.NotNegative(length, nameof(length));
 

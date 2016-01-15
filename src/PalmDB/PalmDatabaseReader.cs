@@ -64,7 +64,7 @@ namespace PalmDB
             for (int i = 0; i < numberOfRecords; i++)
             {
                 var recordDataOffset = await new UintPalmValue(4).ReadValueAsync(reader);
-                var recordAttribute = await new BytePalmValue(1).ReadValueAsync(reader);
+                var recordAttribute = await new ByteArrayPalmValue(1).ReadValueAsync(reader);
                 var uniqueId = await new UintPalmValue(3).ReadValueAsync(reader);
 
                 var record = new PalmDatabaseRecord
@@ -86,7 +86,7 @@ namespace PalmDB
 
                 stream.Seek(startOffset, SeekOrigin.Begin);
 
-                var data = await new BytePalmValue((int)(nextStartOffset - startOffset)).ReadValueAsync(reader);
+                var data = await new ByteArrayPalmValue((int)(nextStartOffset - startOffset)).ReadValueAsync(reader);
                 currentRecord.Item1.Data = data;
             }
 
