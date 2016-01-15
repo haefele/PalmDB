@@ -2,6 +2,9 @@
 
 namespace PalmDB
 {
+    /// <summary>
+    /// All possible attributes of a palm database.
+    /// </summary>
     [Flags]
     public enum PalmDatabaseAttributes
     {
