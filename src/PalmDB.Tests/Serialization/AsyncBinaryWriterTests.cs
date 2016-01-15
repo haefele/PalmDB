@@ -32,7 +32,7 @@ namespace PalmDB.Tests.Serialization
         }
 
         [Fact]
-        public async Task The_WriteAsync_Method_Throws_If_Data_Is_Null()
+        public async Task The_WriteAsync_Method_Throws_When_Data_Is_Null()
         {
             var writer = new AsyncBinaryWriter(new MemoryStream());
 
