@@ -5,7 +5,7 @@ namespace PalmDB
     /// <summary>
     /// Typical guard class that contains methods to validate method arguments.
     /// </summary>
-    public static class Guard
+    internal static class Guard
     {
         /// <summary>
         /// Throws a <see cref="ArgumentNullException"/> if the specified <paramref name="argument"/> is <c>null</c>.
