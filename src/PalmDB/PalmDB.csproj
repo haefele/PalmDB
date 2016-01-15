@@ -47,7 +47,7 @@
     <Compile Include="Serialization\AsyncBinaryReader.cs" />
     <Compile Include="Serialization\AsyncBinaryWriter.cs" />
     <Compile Include="Serialization\BytePalmValue.cs" />
-    <Compile Include="Serialization\DateTimePalmValue.cs" />
+    <Compile Include="Serialization\DateTimeOffsetPalmValue.cs" />
     <Compile Include="Serialization\EnumPalmValue.cs" />
     <Compile Include="Serialization\UintPalmValue.cs" />
     <Compile Include="Serialization\IPalmValue.cs" />

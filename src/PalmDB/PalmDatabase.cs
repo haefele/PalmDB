@@ -11,9 +11,9 @@ namespace PalmDB
         public string Name { get; set; }
         public PalmDatabaseAttributes Attributes { get; set; }
         public short Version { get; set; }
-        public DateTime? CreationDate { get; set; }
-        public DateTime? ModificationDate { get; set; }
-        public DateTime? LastBackupDate { get; set; }
+        public DateTimeOffset? CreationDate { get; set; }
+        public DateTimeOffset? ModificationDate { get; set; }
+        public DateTimeOffset? LastBackupDate { get; set; }
         public uint ModificationNumber { get; set; }
         public uint AppInfoId { get; set; }
         public uint SortInfoId { get; set; }

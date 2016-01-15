@@ -25,13 +25,13 @@ namespace PalmDB
             var versionValue = new UintPalmValue(2);
             database.Version = (short)await versionValue.ReadValueAsync(reader);
 
-            var creationDateValue = new DateTimePalmValue();
+            var creationDateValue = new DateTimeOffsetPalmValue();
             database.CreationDate = await creationDateValue.ReadValueAsync(reader);
 
-            var modificationDateValue = new DateTimePalmValue();
+            var modificationDateValue = new DateTimeOffsetPalmValue();
             database.ModificationDate  = await modificationDateValue.ReadValueAsync(reader);
 
-            var lastBackupDateValue = new DateTimePalmValue();
+            var lastBackupDateValue = new DateTimeOffsetPalmValue();
             database.LastBackupDate = await lastBackupDateValue.ReadValueAsync(reader);
 
             var modificationNumberValue = new UintPalmValue(4);
